@@ -10,7 +10,7 @@ When thinking about it, this really doesn't do anything THAT novel a lot of the 
 
 The backbone of this relies on geohash being a quadkey implementationl. Meaning you can get a defined resolution in the x,y in sub microsecond times, so from a geohash basically were going from geohash to min,max global x & global Y. This will give you something much like a tileid (global x,y) but derived much faster. Take note of the global here as its pretty important. So we have a tile were laying a grid over, we have a way of getting a global x,y from points the next step is to get the bounds of our tile in global geohash dimmensions. These two minimums will effectively be are   offset we subtract from any lookup.
 
-
+```
     x         x
 mx> 0         10 < max x
     x....|....x
@@ -18,7 +18,7 @@ mx> 0         10 < max x
     x         x
     x         x
     x         x
-
+```
 In the diagram below 100 & 105 would be globalx.
 
 Getting the diesnon of our gridx size and gridy size is just the delta between min and max.
@@ -102,9 +102,10 @@ You may be thinking but storing a grid a high zoom will be a super huge grid won
 
 Lets just assume these geohash below are a,b,c, & d (I know this isn't possible)
 
+```
 0 1 
 1 0
-
+```
 So the oldway would look something like this.
 
 ```go
