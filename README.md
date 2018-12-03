@@ -53,7 +53,7 @@ representitive_byte := grid[offset]
 
 #### How Feature Properties Are Stored
 
-As you might have guessed feature properties are stored within that byte and are currently super limited in how many can be within a tile, 127. While often times this may be enough for a single tile I may end up changing the underlying implementation to use 2 bytes for each geohash if the values array gets larger than 128 etc. etc. All indexes are offset by 1 so that first 0 byte value is ALWAYS a no value. 
+As you might have guessed feature properties are stored within that byte and are currently super limited in how many can be stored within a tile, 127 Of course this 127 is related to how many unique polygon properties are within a grid. While often times this may be enough for a single tile I may end up changing the underlying implementation to use 2 bytes for each geohash if the values array gets larger than 128 etc. etc. All indexes are offset by 1 so that first 0 byte value is ALWAYS a no value. 
 
 ##### Processing for setting an item against the Structure
 
