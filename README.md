@@ -4,11 +4,11 @@
 
 This set of files / hack represents some experiemntation with a completely flat point-in-polygon data structure. Which could potentially be ridicoulously quick and pretty small as well. It works by utilzing sort of a combination of the two things I've used for pip algorithms in the past, a defined tile structure to anchor the structure, and heirachal geohashing for super quick quadkeys. 
 
-### Intendded Implementation 
+### Intended Implementation 
 
 When thinking about it, this really doesn't do anything THAT novel a lot of the concepts here are outlined in things like MapBox's UTF-8 grid but with a much different reason for the underlying implementation.
 
-The backbone of this relies on geohash being a quadkey implementationl. Meaning you can get a defined resolution in the x,y in sub microsecond times, so from a geohash basically were going from geohash to min,max global x & global Y. This will give you something much like a tileid (global x,y) but derived much faster. Take note of the global here as its pretty important. So we have a tile were laying a grid over, we have a way of getting a global x,y from points the next step is to get the bounds of our tile in global geohash dimmensions. These two minimums will effectively be are   offset we subtract from any lookup.
+The backbone of this relies on geohash being a quadkey implementationl. Meaning you can get a defined resolution in the x,y in sub microsecond times, so from a geohash basically were going from geohash to min,max global x & global Y. This will give you something much like a tileid (global x,y) but derived much faster. Take note of the global here as its pretty important. So we have a tile were laying a grid over, we have a way of getting a global x,y from points the next step is to get the bounds of our tile in global geohash dimensions. These two minimums will effectively be are   offset we subtract from any lookup.
 
 ```
     x         x
@@ -21,11 +21,11 @@ mx> 0         10 < max x
 ```
 In the diagram below 100 & 105 would be globalx.
 
-Getting the diesnon of our gridx size and gridy size is just the delta between min and max.
+Getting the size of our gridx size and gridy size is just the delta between min and max.
 
 #### The Cool Part
 
-So under a few assumptions are entire point in polygon index can be described as follows.
+So under a few assumptions our entire point in polygon index can be described as follows.
 
 ##### Creating the grid
 
@@ -41,9 +41,9 @@ grid := make([]byte,gridxsize*gridysize)
 
 So this function gets the related index position given a point, geohash integer, and geohash string.. probably only one of these methods will ultimately be implemented but currenty needs all 3 for debugging purposes.
 
-The name of the game here is stated earlier tap into a geohash enocode and ensure you get teh global x and global y out of the process or replace it with geohashing entirely. From this retured x,y we can get our position within our grid were using currently by subtracting from the min x & y. 
+The name of the game here is stated earlier tap into a geohash encode and ensure you get the global x and global y out of the process or replace it with geohashing entirely. From this retured x,y we can get our position within our grid were using currently by subtracting from the min x & y. 
 
-From getting these positions releative within our grid, we can do a simple calculation to get our offset to the byte that represents are geohash.
+From getting these relative positions within our grid, we can do a simple calculation to get our offset to the byte that represents are geohash.
 
 ```golang
 offset := (yref-1)*mapping.XDim+(xref-1)
